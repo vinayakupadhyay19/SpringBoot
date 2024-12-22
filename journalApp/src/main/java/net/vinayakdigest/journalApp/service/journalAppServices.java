@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import net.vinayakdigest.journalApp.model.JournalEntry;
 import net.vinayakdigest.journalApp.model.User;
@@ -22,12 +23,18 @@ public class journalAppServices {
 	@Autowired
 	private userAppRepository uar;
 	
+	@Transactional
 	public void saveEntry(JournalEntry je ,String username) {
-		User user = uar.findByUsername(username);
-		je.setDate(LocalDateTime.now());
-		JournalEntry saved = jar.save(je);
-		user.getJournalEntries().add(saved);
-		uar.save(user);
+		try {
+			User user = uar.findByUsername(username);
+			je.setDate(LocalDateTime.now());
+			JournalEntry saved = jar.save(je);
+			user.getJournalEntries().add(saved);
+			uar.save(user);
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		
 	}
 	public void saveEntry(JournalEntry je) {
 		je.setDate(LocalDateTime.now());

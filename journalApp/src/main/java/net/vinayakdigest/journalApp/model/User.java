@@ -14,11 +14,13 @@ import org.springframework.stereotype.Component;
 import com.mongodb.lang.NonNull;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
 @Data
+@NoArgsConstructor
 @Document(collection = "users")
 public class User {
 	@Id

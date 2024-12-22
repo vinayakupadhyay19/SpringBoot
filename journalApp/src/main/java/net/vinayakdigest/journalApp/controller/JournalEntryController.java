@@ -54,7 +54,6 @@ public class JournalEntryController {
 	}
 	@PostMapping("/createentry/{username}")
 	public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalEntry je , @PathVariable String username) {
-
 		try {
 			jas.saveEntry(je,username);
 			return new ResponseEntity<JournalEntry>(je , HttpStatus.CREATED);

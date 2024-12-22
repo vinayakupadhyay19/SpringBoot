@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 @Data
+@NoArgsConstructor
 @Component
 @Document(collection = "journal_entries")
 
@@ -26,7 +27,7 @@ public class JournalEntry {
 	@Id
 	private ObjectId id;
 	@NonNull
-	private String title ="Deafault";
+	private String title;
 	
 	private String content;
 

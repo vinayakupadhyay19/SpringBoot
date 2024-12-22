@@ -6,6 +6,7 @@ import java.util.*;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,47 +19,62 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import net.vinayakdigest.journalApp.model.JournalEntry;
+import net.vinayakdigest.journalApp.model.User;
 import net.vinayakdigest.journalApp.service.journalAppServices;
+import net.vinayakdigest.journalApp.service.userAppServices;
 
 @RestController
 @RequestMapping("/journal")
 public class JournalEntryController {
-	
+
 	@Autowired
 	private journalAppServices jas;
-	
-	
-	@GetMapping("/findallentry")
-    public List<JournalEntry> getAllEntry() {
-		
-		return jas.getAllEntry();
+
+	@Autowired
+	private userAppServices uas;
+
+
+
+	@GetMapping("/findallentry/{username}")
+	public  ResponseEntity <?> getAllEntryOfUser(@PathVariable String username) {
+		User user = uas.findByUserName(username);
+		List<JournalEntry> res = user.getJournalEntries();
+		if(res != null && !res.isEmpty()) {
+			return new ResponseEntity<>(res , HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	@GetMapping("/id/{id}")
 	public ResponseEntity<JournalEntry> findById(@PathVariable ObjectId id) {
-		   Optional<JournalEntry> obj = jas.findById(id);
-		   if(obj.isPresent()) {
-			   return new ResponseEntity<JournalEntry>(obj.get() , HttpStatus.OK);
-		   }
-		   return new ResponseEntity<JournalEntry>(HttpStatus.NOT_FOUND);
+		Optional<JournalEntry> obj = jas.findById(id);
+		if(obj.isPresent()) {
+			return new ResponseEntity<JournalEntry>(obj.get() , HttpStatus.OK);
+		}
+		return new ResponseEntity<JournalEntry>(HttpStatus.NOT_FOUND);
 	}
-	@PostMapping("/createentry")
-	public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalEntry je) {
-		
+	@PostMapping("/createentry/{username}")
+	public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalEntry je , @PathVariable String username) {
+
 		try {
-			je.setDate(LocalDateTime.now());
-			jas.saveEntry(je);
+			jas.saveEntry(je,username);
 			return new ResponseEntity<JournalEntry>(je , HttpStatus.CREATED);
 		}catch(Exception e) {
 			return new ResponseEntity<JournalEntry>(HttpStatus.BAD_REQUEST);
 		}
-		
-		
+
+
 	}
-	
-	@PutMapping("/id/{id}")
-	public ResponseEntity<JournalEntry> updateEntry(@PathVariable ObjectId id , @RequestBody JournalEntry je) {
+
+	@PutMapping("/id/{username}/{id}")
+	public ResponseEntity<JournalEntry> updateEntry(
+			@PathVariable ObjectId id ,
+			@RequestBody JournalEntry je,
+			@PathVariable String username
+			
+	){
 		JournalEntry old = jas.findById(id).orElse(null);	
 		if(old != null) {
+			if(je.getTitle().isEmpty())
 			old.setTitle(je.getTitle());
 			old.setContent(je.getContent());
 			jas.saveEntry(old);
@@ -67,27 +83,27 @@ public class JournalEntryController {
 		else {
 			return new ResponseEntity<JournalEntry>(HttpStatus.NOT_FOUND);
 		}
-		
+
 	}
 	@DeleteMapping("/deleteall")
 	public ResponseEntity<?> deleteAll() {
 		try {
 			jas.deleteAll();
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			
+
 		}catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
+
 	}
-	@DeleteMapping("/id/{id}")
-	public ResponseEntity<?> deleteById(@PathVariable ObjectId id) {
+	@DeleteMapping("/id/{username}/{id}")
+	public ResponseEntity<?> deleteById(@PathVariable ObjectId id , @PathVariable String username) {
 		try {
-			jas.deleteById(id);
+			jas.deleteById(id,username);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
+
 	}
 }

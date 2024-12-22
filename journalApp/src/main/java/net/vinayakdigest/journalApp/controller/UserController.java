@@ -39,9 +39,9 @@ public class UserController {
 		uas.saveEntry(user);
 	}
 	
-	@PutMapping("/updateUser")
-	public ResponseEntity<?> updateUser(@RequestBody User user){
-		User userInDb = uas.findByUserName(user.getUsername());
+	@PutMapping("/updateUser/{username}")
+	public ResponseEntity<?> updateUser(@RequestBody User user , @PathVariable String username){
+		User userInDb = uas.findByUserName(username);
 		if(userInDb != null) {
 			userInDb.setUsername(user.getUsername());
 			userInDb.setPassword(user.getPassword());

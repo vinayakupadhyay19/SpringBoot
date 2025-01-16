@@ -32,4 +32,6 @@ public class User {
 	private String password = "Deafault";
 	@DBRef
 	private List<JournalEntry> journalEntries = new ArrayList<JournalEntry>();
+	
+	private List<String> roles;
 }

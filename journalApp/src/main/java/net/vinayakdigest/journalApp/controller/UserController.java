@@ -1,13 +1,16 @@
 package net.vinayakdigest.journalApp.controller;
 
-import java.time.LocalDateTime;
+
 import java.util.*;
 
-import org.bson.types.ObjectId;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,23 +34,39 @@ public class UserController {
 	
 	@GetMapping("/getAllUser")
 	public List<User> getAllUsers(){
-		return uas.getAllEntry();
-	}
-	
-	@PostMapping("/createUser")
-	public void createUser(@RequestBody User user) {
-		uas.saveEntry(user);
-	}
-	
-	@PutMapping("/updateUser/{username}")
-	public ResponseEntity<?> updateUser(@RequestBody User user , @PathVariable String username){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getName();
 		User userInDb = uas.findByUserName(username);
+		List<String> roles = userInDb.getRoles();
+		int f=0;
+		for(int i=0;i<roles.size();i++) {
+			if(roles.get(i).equals("ADMIN")) {
+				f=1;
+			}
+		}
+		if(f == 1)
+		return uas.getAllEntry();
+		
+		return  null;
+	}
+
+	@PutMapping("/updateUser")
+	public ResponseEntity<?> updateUser(@RequestBody User user){
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User userInDb = uas.findByUserName(auth.getName());
 		if(userInDb != null) {
 			userInDb.setUsername(user.getUsername());
 			userInDb.setPassword(user.getPassword());
+			userInDb.setRoles(user.getRoles());
 			uas.saveEntry(userInDb);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+	
+	@DeleteMapping("delete-user")
+	public void deleteUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		uas.deleteByUsername(auth.getName());
 	}
 }

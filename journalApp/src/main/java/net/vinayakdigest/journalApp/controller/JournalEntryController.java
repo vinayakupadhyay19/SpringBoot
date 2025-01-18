@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,8 +37,10 @@ public class JournalEntryController {
 
 
 
-	@GetMapping("/findallentry/{username}")
-	public  ResponseEntity <?> getAllEntryOfUser(@PathVariable String username) {
+	@GetMapping("/findallentry")
+	public  ResponseEntity <?> getAllEntryOfUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getName();
 		User user = uas.findByUserName(username);
 		List<JournalEntry> res = user.getJournalEntries();
 		if(res != null && !res.isEmpty()) {
@@ -52,8 +56,10 @@ public class JournalEntryController {
 		}
 		return new ResponseEntity<JournalEntry>(HttpStatus.NOT_FOUND);
 	}
-	@PostMapping("/createentry/{username}")
-	public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalEntry je , @PathVariable String username) {
+	@PostMapping("/createentry")
+	public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalEntry je ) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getName();
 		try {
 			jas.saveEntry(je,username);
 			return new ResponseEntity<JournalEntry>(je , HttpStatus.CREATED);
@@ -69,12 +75,12 @@ public class JournalEntryController {
 			@PathVariable ObjectId id ,
 			@RequestBody JournalEntry je,
 			@PathVariable String username
-			
-	){
+
+			){
 		JournalEntry old = jas.findById(id).orElse(null);	
 		if(old != null) {
 			if(je.getTitle().isEmpty())
-			old.setTitle(je.getTitle());
+				old.setTitle(je.getTitle());
 			old.setContent(je.getContent());
 			jas.saveEntry(old);
 			return new ResponseEntity<JournalEntry>(HttpStatus.OK);

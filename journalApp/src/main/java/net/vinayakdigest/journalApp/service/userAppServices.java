@@ -24,7 +24,6 @@ public class userAppServices {
 	
 	public void saveEntry(User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		user.setRoles(Arrays.asList("USER"));
 		uar.save(user);
 	}
 	
@@ -48,5 +47,12 @@ public class userAppServices {
 	
 	public User findByUserName(String username) {
 		return uar.findByUsername(username);
+	}
+
+
+	public void deleteByUsername(String username) {
+		// TODO Auto-generated method stub
+		uar.deleteByUsername(username);
+		
 	}
 }

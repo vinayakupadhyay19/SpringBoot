@@ -10,4 +10,7 @@ import net.vinayakdigest.journalApp.model.User;
 
 public interface userAppRepository extends MongoRepository<User, ObjectId> {
 	User findByUsername(String username);
+	
+    void deleteByUsername(String username);
+	
 }

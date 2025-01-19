@@ -2,7 +2,10 @@ package net.vinayakdigest.journalApp.controller;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
+import org.apache.tomcat.Jar;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +39,6 @@ public class JournalEntryController {
 	private userAppServices uas;
 
 
-
 	@GetMapping("/findallentry")
 	public  ResponseEntity <?> getAllEntryOfUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -50,9 +52,19 @@ public class JournalEntryController {
 	}
 	@GetMapping("/id/{id}")
 	public ResponseEntity<JournalEntry> findById(@PathVariable ObjectId id) {
-		Optional<JournalEntry> obj = jas.findById(id);
-		if(obj.isPresent()) {
-			return new ResponseEntity<JournalEntry>(obj.get() , HttpStatus.OK);
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getName();
+
+		User user = jas.findByUsername(username);
+
+		List<JournalEntry> collect =  user.getJournalEntries()
+				.stream().filter(x-> x.getId().equals(id)).collect(Collectors.toList());
+		if(!collect.isEmpty()) {
+			Optional<JournalEntry> obj = jas.findById(id);
+			if(obj.isPresent()) {
+				return new ResponseEntity<JournalEntry>(obj.get() , HttpStatus.OK);
+			}
 		}
 		return new ResponseEntity<JournalEntry>(HttpStatus.NOT_FOUND);
 	}
@@ -70,25 +82,32 @@ public class JournalEntryController {
 
 	}
 
-	@PutMapping("/id/{username}/{id}")
+	@PutMapping("/id/{id}")
 	public ResponseEntity<JournalEntry> updateEntry(
 			@PathVariable ObjectId id ,
-			@RequestBody JournalEntry je,
-			@PathVariable String username
-
+			@RequestBody JournalEntry je
 			){
-		JournalEntry old = jas.findById(id).orElse(null);	
-		if(old != null) {
-			if(je.getTitle().isEmpty())
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getName();
+
+		User user = jas.findByUsername(username);
+
+		List<JournalEntry> collect = user.getJournalEntries()
+				.stream().filter(x->x.getId().equals(id)).collect(Collectors.toList());
+
+		if(!collect.isEmpty()) {
+			JournalEntry old = jas.findById(id).orElse(null);	
+			if(old != null) {
+				if(je.getTitle() != null) 
 				old.setTitle(je.getTitle());
-			old.setContent(je.getContent());
-			jas.saveEntry(old);
-			return new ResponseEntity<JournalEntry>(HttpStatus.OK);
-		}
-		else {
-			return new ResponseEntity<JournalEntry>(HttpStatus.NOT_FOUND);
+				old.setContent(je.getContent());
+				jas.saveEntry(old);
+				return new ResponseEntity<JournalEntry>(HttpStatus.OK);
+				
+			}
 		}
 
+		return new ResponseEntity<JournalEntry>(HttpStatus.BAD_REQUEST);
 	}
 	@DeleteMapping("/deleteall")
 	public ResponseEntity<?> deleteAll() {
@@ -101,14 +120,19 @@ public class JournalEntryController {
 		}
 
 	}
-	@DeleteMapping("/id/{username}/{id}")
-	public ResponseEntity<?> deleteById(@PathVariable ObjectId id , @PathVariable String username) {
-		try {
+	@DeleteMapping("/id/{id}")
+	public ResponseEntity<?> deleteById(@PathVariable ObjectId id ) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getName();
+
+		User user = jas.findByUsername(username);
+
+		List<JournalEntry>collect = user.getJournalEntries().stream().filter(x->x.getId().equals(id)).collect(Collectors.toList());
+
+		if(!collect.isEmpty()) {
 			jas.deleteById(id,username);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 }

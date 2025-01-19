@@ -50,14 +50,26 @@ public class journalAppServices {
 		jar.deleteAll();
 	}
 	
+	@Transactional
 	public void deleteById(ObjectId id , String username) {
-		User user = uar.findByUsername(username);
-		user.getJournalEntries().removeIf(x->x.getId().equals(id));
-		uar.save(user);
-		jar.deleteById(id);
+		try {
+			User user = uar.findByUsername(username);
+			boolean removed = user.getJournalEntries().removeIf(x->x.getId().equals(id));
+			if(removed) {
+				uar.save(user);
+				jar.deleteById(id);
+			}
+		}catch(Exception e) {
+			System.out.println(e);
+			throw new RuntimeException("An error occured while deleting the entry : ",e);
+		}
+		
 	}
 	
 	public Optional<JournalEntry> findById(ObjectId id) {
 		return jar.findById(id);
+	}
+	public User findByUsername(String username) {
+		return uar.findByUsername(username);
 	}
 }

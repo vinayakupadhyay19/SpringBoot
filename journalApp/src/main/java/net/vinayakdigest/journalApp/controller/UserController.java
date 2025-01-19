@@ -6,7 +6,7 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 
@@ -33,7 +33,7 @@ public class UserController {
 	private userAppServices uas;
 	
 	@GetMapping("/getAllUser")
-	public List<User> getAllUsers(){
+	public ResponseEntity<?> getAllUsers(){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getName();
 		User userInDb = uas.findByUserName(username);
@@ -44,11 +44,24 @@ public class UserController {
 				f=1;
 			}
 		}
-		if(f == 1)
-		return uas.getAllEntry();
-		
-		return  null;
+		if(f == 1) {
+			List<User> res= uas.getAllEntry();
+			return new ResponseEntity<>(res, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
+	
+	@GetMapping("/getuserdetail")
+	public ResponseEntity<?> getUserDetail(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getName();
+		User userInDb = uas.findByUserName(username);
+		if(userInDb != null) {
+			return new ResponseEntity<>(userInDb , HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
+	
 
 	@PutMapping("/updateUser")
 	public ResponseEntity<?> updateUser(@RequestBody User user){
@@ -65,8 +78,9 @@ public class UserController {
 	}
 	
 	@DeleteMapping("delete-user")
-	public void deleteUser() {
+	public ResponseEntity<?> deleteUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		uas.deleteByUsername(auth.getName());
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }

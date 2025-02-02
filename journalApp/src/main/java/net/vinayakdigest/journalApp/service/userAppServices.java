@@ -10,11 +10,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import lombok.extern.slf4j.Slf4j;
 import net.vinayakdigest.journalApp.model.User;
 import net.vinayakdigest.journalApp.repository.journalAppRepository;
 import net.vinayakdigest.journalApp.repository.userAppRepository;
 
 @Component
+@Slf4j
 public class userAppServices {
 	
 	@Autowired
@@ -22,9 +24,20 @@ public class userAppServices {
 	
 	private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
-	public void saveEntry(User user) {
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		uar.save(user);
+	public boolean saveEntry(User user) {
+		try {
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			uar.save(user);
+			return true;
+		}catch(Exception e) {
+			log.error("HAHAHAHAHAHAHA");
+			log.info("HAHAHAHAHAHAHA");
+			log.warn("HAHAHAHAHAHAHA");
+			log.debug("HAHAHAHAHAHAHA");
+			log.trace("HAHAHAHAHAHAHA");
+			return false;
+		}
+		
 	}
 	
 	

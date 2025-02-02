@@ -1,0 +1,40 @@
+25-02-02 13:06:00:963 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - POST "/public/create-user", parameters={}
+25-02-02 13:06:00:968 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to net.vinayakdigest.journalApp.controller.PublicController#createUser(User)
+25-02-02 13:06:00:972 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [User(id=null, username=ram, password=ram, journalEntries=[], roles=[USER])]
+25-02-02 13:06:01:095 [http-nio-8080-exec-8] DEBUG o.s.data.mongodb.core.MongoTemplate - Inserting Document containing fields: [username, password, journalEntries, roles, _class] in collection: users
+25-02-02 13:06:01:153 [http-nio-8080-exec-8] ERROR n.v.j.service.userAppServices - HAHAHAHAHAHAHA
+25-02-02 13:06:01:153 [http-nio-8080-exec-8] INFO  n.v.j.service.userAppServices - HAHAHAHAHAHAHA
+25-02-02 13:06:01:153 [http-nio-8080-exec-8] WARN  n.v.j.service.userAppServices - HAHAHAHAHAHAHA
+25-02-02 13:06:01:153 [http-nio-8080-exec-8] DEBUG n.v.j.service.userAppServices - HAHAHAHAHAHAHA
+25-02-02 13:06:01:154 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/octet-stream', given [*/*] and supported [*/*]
+25-02-02 13:06:01:154 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+25-02-02 13:06:11:512 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - POST "/public/create-user", parameters={}
+25-02-02 13:06:11:514 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to net.vinayakdigest.journalApp.controller.PublicController#createUser(User)
+25-02-02 13:06:11:525 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [User(id=null, username=ram, password=ram, journalEntries=[], roles=[USER])]
+25-02-02 13:06:11:645 [http-nio-8080-exec-9] DEBUG o.s.data.mongodb.core.MongoTemplate - Inserting Document containing fields: [username, password, journalEntries, roles, _class] in collection: users
+25-02-02 13:06:11:705 [http-nio-8080-exec-9] ERROR n.v.j.service.userAppServices - HAHAHAHAHAHAHA
+25-02-02 13:06:11:706 [http-nio-8080-exec-9] INFO  n.v.j.service.userAppServices - HAHAHAHAHAHAHA
+25-02-02 13:06:11:706 [http-nio-8080-exec-9] WARN  n.v.j.service.userAppServices - HAHAHAHAHAHAHA
+25-02-02 13:06:11:706 [http-nio-8080-exec-9] DEBUG n.v.j.service.userAppServices - HAHAHAHAHAHAHA
+25-02-02 13:06:11:707 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/octet-stream', given [*/*] and supported [*/*]
+25-02-02 13:06:11:708 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+25-02-02 13:06:20:731 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/public/create-user", parameters={}
+25-02-02 13:06:20:732 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to net.vinayakdigest.journalApp.controller.PublicController#createUser(User)
+25-02-02 13:06:20:739 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [User(id=null, username=ram, password=ram, journalEntries=[], roles=[USER])]
+25-02-02 13:06:20:860 [http-nio-8080-exec-1] DEBUG o.s.data.mongodb.core.MongoTemplate - Inserting Document containing fields: [username, password, journalEntries, roles, _class] in collection: users
+25-02-02 13:06:20:933 [http-nio-8080-exec-1] ERROR n.v.j.service.userAppServices - HAHAHAHAHAHAHA
+25-02-02 13:06:20:933 [http-nio-8080-exec-1] INFO  n.v.j.service.userAppServices - HAHAHAHAHAHAHA
+25-02-02 13:06:20:933 [http-nio-8080-exec-1] WARN  n.v.j.service.userAppServices - HAHAHAHAHAHAHA
+25-02-02 13:06:20:933 [http-nio-8080-exec-1] DEBUG n.v.j.service.userAppServices - HAHAHAHAHAHAHA
+25-02-02 13:06:20:934 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/octet-stream', given [*/*] and supported [*/*]
+25-02-02 13:06:20:935 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+25-02-02 13:06:46:890 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - POST "/public/create-user", parameters={}
+25-02-02 13:06:46:891 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to net.vinayakdigest.journalApp.controller.PublicController#createUser(User)
+25-02-02 13:06:46:893 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [User(id=null, username=ram, password=ram, journalEntries=[], roles=[USER])]
+25-02-02 13:06:47:031 [http-nio-8080-exec-3] DEBUG o.s.data.mongodb.core.MongoTemplate - Inserting Document containing fields: [username, password, journalEntries, roles, _class] in collection: users
+25-02-02 13:06:47:094 [http-nio-8080-exec-3] ERROR n.v.j.service.userAppServices - HAHAHAHAHAHAHA
+25-02-02 13:06:47:095 [http-nio-8080-exec-3] INFO  n.v.j.service.userAppServices - HAHAHAHAHAHAHA
+25-02-02 13:06:47:096 [http-nio-8080-exec-3] WARN  n.v.j.service.userAppServices - HAHAHAHAHAHAHA
+25-02-02 13:06:47:097 [http-nio-8080-exec-3] DEBUG n.v.j.service.userAppServices - HAHAHAHAHAHAHA
+25-02-02 13:06:47:098 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/octet-stream', given [*/*] and supported [*/*]
+25-02-02 13:06:47:099 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST

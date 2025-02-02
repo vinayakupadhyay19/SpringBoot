@@ -1,8 +1,0 @@
-25-02-02 13:07:00:228 [http-nio-8080-exec-5] DEBUG o.s.d.m.r.query.MongoQueryCreator - Created query Query: { "username" : "ram"}, Fields: {}, Sort: {}
-25-02-02 13:07:00:350 [http-nio-8080-exec-5] DEBUG o.s.data.mongodb.core.MongoTemplate - find using query: { "username" : "ram"} fields: Document{{}} sort: { "username" : "ram"} for class: class net.vinayakdigest.journalApp.model.User in collection: users
-25-02-02 13:07:01:144 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/user/getAllUser", parameters={}
-25-02-02 13:07:01:146 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to net.vinayakdigest.journalApp.controller.UserController#getAllUsers()
-25-02-02 13:07:01:159 [http-nio-8080-exec-5] DEBUG o.s.d.m.r.query.MongoQueryCreator - Created query Query: { "username" : "ram"}, Fields: {}, Sort: {}
-25-02-02 13:07:01:166 [http-nio-8080-exec-5] DEBUG o.s.data.mongodb.core.MongoTemplate - find using query: { "username" : "ram"} fields: Document{{}} sort: { "username" : "ram"} for class: class net.vinayakdigest.journalApp.model.User in collection: users
-25-02-02 13:07:01:289 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/octet-stream', given [*/*] and supported [*/*]
-25-02-02 13:07:01:290 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST

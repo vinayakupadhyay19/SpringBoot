@@ -1,9 +1,0 @@
-25-02-02 13:08:18:381 [http-nio-8080-exec-8] DEBUG o.s.d.m.r.query.MongoQueryCreator - Created query Query: { "username" : "ram"}, Fields: {}, Sort: {}
-25-02-02 13:08:18:386 [http-nio-8080-exec-8] DEBUG o.s.data.mongodb.core.MongoTemplate - find using query: { "username" : "ram"} fields: Document{{}} sort: { "username" : "ram"} for class: class net.vinayakdigest.journalApp.model.User in collection: users
-25-02-02 13:08:18:710 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/user/getuserdetail", parameters={}
-25-02-02 13:08:18:712 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to net.vinayakdigest.journalApp.controller.UserController#getUserDetail()
-25-02-02 13:08:18:719 [http-nio-8080-exec-8] DEBUG o.s.d.m.r.query.MongoQueryCreator - Created query Query: { "username" : "ram"}, Fields: {}, Sort: {}
-25-02-02 13:08:18:720 [http-nio-8080-exec-8] DEBUG o.s.data.mongodb.core.MongoTemplate - find using query: { "username" : "ram"} fields: Document{{}} sort: { "username" : "ram"} for class: class net.vinayakdigest.journalApp.model.User in collection: users
-25-02-02 13:08:18:914 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-25-02-02 13:08:18:923 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [User(id=678d20f18c511524109eb71e, username=ram, password=$2a$10$2gS4kmWlBMJvaJRNcqd6JuYIc3odG2uxfv5q (truncated)...]
-25-02-02 13:08:19:007 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK

@@ -20,17 +20,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import net.vinayakdigest.journalApp.api.response.WeatherResponse;
 import net.vinayakdigest.journalApp.model.JournalEntry;
 import net.vinayakdigest.journalApp.model.User;
 import net.vinayakdigest.journalApp.service.journalAppServices;
 import net.vinayakdigest.journalApp.service.userAppServices;
+import net.vinayakdigest.journalApp.service.wheatherServiceImpl;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 	@Autowired
 	private userAppServices uas;
+	@Autowired
+	private wheatherServiceImpl was;
 	
 	@GetMapping("/getAllUser")
 	public ResponseEntity<?> getAllUsers(){
@@ -83,4 +86,24 @@ public class UserController {
 		uas.deleteByUsername(auth.getName());
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
+	
+	
+	@GetMapping("user-greeting")
+	public ResponseEntity<?> greetingUser(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String greeting = "";
+		WeatherResponse res = was.getWether("Gurgaon");
+		if(res != null) {
+			greeting = " -- Weather Feels like :-> "+ res.getCurrent().getTempC()
+						+"  in Degree C or "
+						+res.getCurrent().getTempF()
+					    +" or in Farenhite F "
+						+"-- speed in kph:->  "
+						+res.getCurrent().getWindKph();
+		}
+		
+		return new ResponseEntity<>("Hi "+auth.getName()+greeting , HttpStatus.OK);
+	}
+	
+	
 }

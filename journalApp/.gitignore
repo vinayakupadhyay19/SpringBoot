@@ -1,8 +1,10 @@
 HELP.md
 target/
 src/main/resources/application.properties
+.env
+*.log
 journalApp**.log
-journalApp.log
+.journalApp.log
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/

@@ -1,6 +1,7 @@
 package net.vinayakdigest.journalApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -11,7 +12,8 @@ import net.vinayakdigest.journalApp.api.response.WeatherResponse;
 @Component
 public class wheatherServiceImpl {
 	
-	private static final String apiKey = "59eb13ccfa9e45b1931162224250302";
+	@Value("${whether.api.apiKey}")
+	private String apiKey;
 	
 	private static final String API = "http://api.weatherapi.com/v1/current.json?key=API_KEY&q=CITY";
 	

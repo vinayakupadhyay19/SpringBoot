@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.vinayakdigest.journalApp.cache.AppCache;
 import net.vinayakdigest.journalApp.model.User;
 import net.vinayakdigest.journalApp.service.userAppServices;
+import net.vinayakdigest.journalApp.service.wheatherServiceImpl;
 
 @RestController
 @RequestMapping("/public")
@@ -19,6 +21,9 @@ public class PublicController {
 	
 	@Autowired
 	private userAppServices uas;
+	
+	@Autowired
+	private AppCache ac;
 
 	@GetMapping("health")
 	public String healthCheck() {
@@ -35,5 +40,10 @@ public class PublicController {
 			return new ResponseEntity<> (HttpStatus.BAD_REQUEST);
 		}
 		
+	}
+	@GetMapping("cache-clear-api")
+	public ResponseEntity<?> cacheClear(){
+		ac.init();
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

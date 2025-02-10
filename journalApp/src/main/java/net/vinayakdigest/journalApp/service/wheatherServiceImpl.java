@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import net.vinayakdigest.journalApp.api.response.WeatherResponse;
+import net.vinayakdigest.journalApp.cache.AppCache;
 
 @Component
 public class wheatherServiceImpl {
@@ -15,15 +16,16 @@ public class wheatherServiceImpl {
 	@Value("${whether.api.apiKey}")
 	private String apiKey;
 	
-	private static final String API = "http://api.weatherapi.com/v1/current.json?key=API_KEY&q=CITY";
-	
 	
 	@Autowired
 	private RestTemplate restTemplate;
 	
+	@Autowired
+	private AppCache ac;
+	
 	
 	public WeatherResponse getWether(String city) {
-		String finalAPI = API.replace("API_KEY", apiKey).replace("CITY", city);
+		String finalAPI = ac.appCache.get("weatherApi").replace("<API_KEY>", apiKey).replace("<CITY>", city);
 		
 		ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalAPI, HttpMethod.GET ,null , WeatherResponse.class);
 		

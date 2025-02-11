@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.mongodb.lang.NonNull;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,10 +22,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Document(collection = "users")
 public class User {
 	@Id
 	private ObjectId id;
+	private String email;
+	private boolean sentimentAnalysis;
 	@Indexed(unique = true)
 	@NonNull
 	private String username = "Deafault";

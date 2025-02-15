@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.vinayakdigest.journalApp.cache.AppCache;
+import net.vinayakdigest.journalApp.model.Email;
 import net.vinayakdigest.journalApp.model.User;
+import net.vinayakdigest.journalApp.service.EmailService;
 import net.vinayakdigest.journalApp.service.userAppServices;
 import net.vinayakdigest.journalApp.service.wheatherServiceImpl;
 
@@ -24,6 +26,9 @@ public class PublicController {
 	
 	@Autowired
 	private AppCache ac;
+	
+	@Autowired
+	private EmailService es;
 
 	@GetMapping("health")
 	public String healthCheck() {
@@ -45,5 +50,17 @@ public class PublicController {
 	public ResponseEntity<?> cacheClear(){
 		ac.init();
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@PostMapping("send-mail")
+	public ResponseEntity<?> sendMail(@RequestBody Email email){
+		
+		
+	    String res = es.sendEmail(email);
+	    if(res.length() <= 10)
+	    return new ResponseEntity<>(res , HttpStatus.OK);
+
+		return new ResponseEntity<> (res ,HttpStatus.BAD_REQUEST);
+	
 	}
 }
